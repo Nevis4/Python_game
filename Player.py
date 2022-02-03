@@ -1,4 +1,5 @@
 import pygame
+from Window import window
 
 image = pygame.image.load('player.png')
 image = pygame.transform.scale(image, (100, 100))
@@ -6,11 +7,11 @@ image = pygame.transform.scale(image, (100, 100))
 
 class Player:
     def __init__(self):
-        self.window = pygame.display.set_mode((800, 600))
         self.x = 0
         self.y = 0
         self.wigth = 100
         self.height = 100
+        self.hitbox = pygame.Rect(self.x, self.y, self.wigth, self.height)
 
     def move(self):
         keys = pygame.key.get_pressed()
@@ -23,4 +24,5 @@ class Player:
             self.y -= speed
         if keys[pygame.K_DOWN] and self.y < 600 - self.height:
             self.y += speed
-        self.window.blit(image, (self.x, self.y))
+        window.window_make_character(image, (self.x, self.y))
+        self.hitbox = pygame.Rect(self.x, self.y, self.wigth, self.height)

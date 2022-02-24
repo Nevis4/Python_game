@@ -1,7 +1,7 @@
 import pygame
 from Window import window
 from Cash import Cash
-
+pygame.font.init()
 
 class Game:
     def __init__(self, player):
@@ -9,30 +9,33 @@ class Game:
         self.player = player
 
     def play(self):
-        __clock = 0
-        __banknotes = []
-        __score = 0
+        clock = 0
+        banknotes = []
+        score = 0
 
         while self.__run:
-            __clock += pygame.time.Clock().tick(60) / 1000
+            clock += pygame.time.Clock().tick(60) / 1000
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.__run = False
-            if __clock >= 3:
-                __banknotes.append(Cash())
-                __clock = 0
+            if clock >= 3:
+                banknotes.append(Cash())
+                clock = 0
 
-            for banknote in __banknotes:
+            text_image = pygame.font.Font.render(pygame.font.SysFont("arial", 48), str(score), True, (255, 255, 255)) # creating a score counter
+
+            for banknote in banknotes:
                 if self.player.hitbox.colliderect(banknote.hitbox):
-                    __banknotes.remove(banknote)
-                    __score += 1
-                    print(__score)
+                    banknotes.remove(banknote)
+                    score += 1
+                    print(score)
 
             window.set_window_fill()
-            for banknote in __banknotes:
+            for banknote in banknotes:
                 banknote.draw()
 
             self.player.move()
+            window.window_make_character(text_image, (0, 0)) # draw counter
             window.window_update()
 
 

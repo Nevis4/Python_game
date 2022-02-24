@@ -1,7 +1,7 @@
 import pygame
 from Window import window
 
-image = pygame.image.load('player.png')
+image = pygame.image.load('img/player.png')
 image = pygame.transform.scale(image, (100, 100))
 
 
